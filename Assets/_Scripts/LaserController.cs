@@ -32,8 +32,7 @@ public class LaserController : MonoBehaviour
             float discance = (hit.point - (Vector2)transform.position).magnitude;
             line.SetPosition(1, new Vector3(discance, 0, 0));
             particleHit.transform.position = hit.point;
-            //Debug.Log("i hit: " + hit.collider.name);
-            hit.collider.GetComponent<PlayerController>()?.KillPlayer();
+            hit.collider.GetComponent<PlayerController>()?.KillPlayer(); //? undersøger laver et try call så hvis objektet vi rammer har PlayerControlleren som et component vil den kalde KillPlayer.
         }
     }
 }

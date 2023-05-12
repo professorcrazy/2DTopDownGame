@@ -18,7 +18,7 @@ public class EnemyController : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        transform.Rotate(Vector3.forward * (rotationSpeed * Time.deltaTime));
+        transform.Rotate((rotationSpeed * Time.deltaTime) * Vector3.forward);
         if (returnOnSamePath) {
             MoveWithReturn();
         }
@@ -28,9 +28,9 @@ public class EnemyController : MonoBehaviour
     }
 
     void Move() {
-        Vector2 dir = wpManager.waypoints[nextWaypointIndex].position - transform.position;
+        Vector2 dir = wpManager.waypoints[nextWaypointIndex].position - transform.position; //Finder retningsvektoren mellem fjenden og dens næste waypoint position. 
         if (dir.sqrMagnitude < 0.25f) {
-            nextWaypointIndex = (nextWaypointIndex + 1) % wpManager.waypoints.Length;
+            nextWaypointIndex = (nextWaypointIndex + 1) % wpManager.waypoints.Length; //Vi bruger modulus (%) til at sikre vi ikke prøver at tilgå en plads i arrayet som ikke eksistere
         }
         else {
             rb.velocity = dir.normalized * speed;
@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour
 
         Vector2 dir = wpManager.waypoints[nextWaypointIndex].position - transform.position;
         if (dir.sqrMagnitude < 0.25f) {
-            if (nextWaypointIndex + 1 >= wpManager.waypoints.Length || nextWaypointIndex - 1 < 0) {
+            if (nextWaypointIndex + 1 >= wpManager.waypoints.Length || nextWaypointIndex - 1 < 0) {//undersøger om vi er ved starten eller slutningen af vores waypoint array.
                 pathDirection *= -1;
             }
             nextWaypointIndex = (nextWaypointIndex + pathDirection);
@@ -50,6 +50,6 @@ public class EnemyController : MonoBehaviour
         }
     }
     private void OnCollisionEnter2D(Collision2D other) {
-        other.gameObject.GetComponent<PlayerController>()?.KillPlayer();
+            other.gameObject.GetComponent<PlayerController>()?.KillPlayer(); //? undersøger laver et try call så hvis objektet vi rammer har PlayerControlleren som et component vil den kalde KillPlayer.
     }
 }

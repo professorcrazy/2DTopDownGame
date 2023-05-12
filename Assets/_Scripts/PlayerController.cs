@@ -30,9 +30,4 @@ public class PlayerController : MonoBehaviour
     public void KillPlayer() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
-    private void OnDestroy() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
 }
